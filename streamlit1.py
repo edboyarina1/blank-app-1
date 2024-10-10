@@ -17,6 +17,13 @@ def simulate_job_application(input_iq):
     else:
         earnings = 100 - 3 * (input_iq - original_iq)
         return f"Вас взяли на работу. Ваш доход составил {earnings} рублей."
+        
+def save_result_to_csv(name, input_iq, result, earnings, language):
+    # Создание или добавление данных в CSV-файл
+    df = pd.DataFrame([[name, input_iq, result, earnings, language, datetime.now().strftime("%Y-%m-%d %H:%M:%S")]],
+                      columns=["Имя / Name", "IQ", "Результат / Result", "Доход / Earnings", "Язык / Language", "Время / Time"])
+    df.to_csv("results.csv", mode='a', index=False, header=not pd.io.common.file_exists("results.csv"))
+
 
 # Заголовок приложения
 st.title("Симуляция приема на работу / Job Application Simulation")
